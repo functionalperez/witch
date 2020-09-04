@@ -1,3 +1,3 @@
-# fae - a build system and package mananger for c++
+# witch - a build system and package mananger for c++
 
 
