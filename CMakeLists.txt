@@ -11,9 +11,10 @@ endif()
 
 include_directories(include)
 add_subdirectory(conduit)
+add_subdirectory(yaml-cpp)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-target_link_libraries(witch PRIVATE conduit Threads::Threads)
+target_link_libraries(witch PRIVATE conduit yaml-cpp Threads::Threads)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME AND BUILD_TESTING)
     file(GLOB all_tests "test/*.cpp")
