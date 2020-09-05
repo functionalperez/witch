@@ -1,0 +1,107 @@
+language: cpp
+
+flag ordering:
+  - compiler: [gcc, clang]
+    ordering:
+      - [-std=c++20, -std=c++2a, -std=c++17, -std=c++1z, -std=c++14, -std=c++1y, -std=c++11, -std=c++0x, -std=c++03, -std=c++98]
+      - [-std=gnu++20, -std=gnu++2a, -std=gnu++17, -std=gnu++1z, -std=gnu++14, -std=gnu++1y, -std=gnu++11, -std=gnu++0x, -std=gnu++03, -std=gnu++98]
+      - [-std=gnu++20, -std=c++20]
+      - [-std=gnu++2a, -std=c++2a]
+      - [-std=gnu++17, -std=c++17]
+      - [-std=gnu++1z, -std=c++1z]
+      - [-std=gnu++14, -std=c++14]
+      - [-std=gnu++1y, -std=c++1y]
+      - [-std=gnu++11, -std=c++11]
+      - [-std=gnu++0x, -std=c++0x]
+      - [-std=gnu++03, -std=c++03]
+      - [-std=gnu++98, -std=c++98]
+  - compiler: msvc
+    ordering:
+      - [/std:c++latest, /std:c++17, /std:c++14, /std:c++11]
+
+features:
+  - name: coroutines
+    requires:
+      - compiler: gcc
+        version: v10
+        flags: ["-std=c++20", "-fcoroutines"]
+      - compiler: clang
+        version: v10
+        flags: ["-std=c++20"]
+      - compiler: msvc
+        version: v19
+        flags: ["/std:c++latest", "/await", "/EHsc"]
+  - name: threads
+    requires:
+      - compiler: [gcc, clang]
+        version: v1
+        flags: ["-pthread"]
+      - compiler: msvc
+        version: v1
+        flags: []
+  - name: concepts
+    requires:
+      - compiler: gcc
+        version: v10
+        flags: ["-std=c++20"]
+
+versions:
+  - name: cpp20
+    requires:
+      - compiler: gcc
+        version: v8
+        flag: -std=c++2a
+
+      - compiler: gcc
+        version: v10
+        flag: -std=c++20
+
+      - compiler: clang
+        version: v7
+        flag: -std=c++2a
+
+      - compiler: clang
+        version: v10
+        flag: -std=c++20
+  - name: cpp17
+    requires:
+      - compiler: gcc
+        version: v7
+        flag: -std=c++17
+
+      - compiler: clang
+        version: v7
+        flag: -std=c++17
+
+
+compilers:
+  - name: gcc
+    aliases:
+      - "g++"
+      - "gcc"
+      - "gnu"
+      - "GNU"
+    version flag: "--version"
+    parse version:
+      - "g++ <parenthetical> <version>"
+      - "g++-<int> <parenthetical> <version>"
+      - "g++-<int>.<int> <parenthetical> <version>"
+
+  - name: clang
+    aliases:
+      - clang
+      - clang++
+      - CLANG
+    version flag: "--version"
+    parse version:
+      - "clang version <version>"
+
+  - name: msvc
+    os: windows
+    version flag: ""
+    aliases:
+      - msvc
+      - cl
+    parse version:
+      - "Microsoft (R) 32-bit C/C++ Optimizing Compiler Version <version>"
+      - "Microsoft (R) C/C++ Optimizing Compiler Version <version>"
