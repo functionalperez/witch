@@ -1,0 +1,16 @@
+project: witch
+
+language: cpp20
+
+uses:
+  - conduit
+  - yaml-cpp
+  - fmt
+  - pthread
+
+compilers:
+  - name: gcc
+    min version: 10.0.0
+
+  - name: clang
+    min version: 10.0.0
